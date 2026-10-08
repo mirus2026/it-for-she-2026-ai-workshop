@@ -1,0 +1,54 @@
+# Python dependencies for handwritten-digit-recognition-nn
+#
+# Derived from the imports in handwritten-digit-recognition.py and
+# mnist_ui_local_model.py. Only third-party packages are listed here;
+# os / logging / threading / tkinter are part of the Python standard library
+# (tkinter ships with the standard python.org Windows installer).
+#
+# -----------------------------------------------------------------------------
+# tkinter (standard library — NOT a pip package, cannot be pip-installed)
+# -----------------------------------------------------------------------------
+# mnist_ui_local_model.py imports `tkinter` for its drawing UI. tkinter is a
+# wrapper around the C extension `_tkinter`, which must be present in the Python
+# build. It is NOT available on PyPI, so it must NOT be added as a pip
+# requirement below (doing so makes `pip install -r requirements.txt` fail with
+# "No matching distribution found for tkinter").
+#
+# How to make `import tkinter` work, per platform:
+#   * Windows  : included with the official python.org installer (nothing to do).
+#   * Debian / Ubuntu / ParrotOS : sudo apt install python3-tk
+#   * Fedora   : sudo dnf install python3-tkinter
+#   * macOS    : included with python.org installer; Homebrew: brew install python-tk
+#   * pyenv    : the Tk dev headers (tk-dev / tcl-dev) must be installed BEFORE
+#                building, otherwise Python compiles without _tkinter. Install the
+#                headers, then rebuild:  pyenv install <version>
+#
+# Verify it works:   python -c "import tkinter; tkinter._test()"
+#
+# Target interpreter: Python 3.12.10 (64-bit). TensorFlow supports 3.12;
+# it does NOT provide wheels for Python 3.14. Create the venv with:
+#       py -3.12 -m venv .venv
+#
+# Versions below are pinned to the exact set installed in this project's .venv.
+#
+# Install with:
+#   .\.venv\Scripts\python.exe -m pip install -r requirements.txt
+
+# --- Deep learning framework (provides tensorflow.keras used by both scripts) ---
+tensorflow==2.21.0
+
+# --- Numerical / data handling ---
+numpy==2.5.3
+pandas==3.0.5
+
+# --- Plotting (training accuracy curve, sample digit images) ---
+matplotlib==3.11.1
+
+# --- Train/validation split (sklearn.model_selection.train_test_split) ---
+scikit-learn==1.9.0
+
+# --- Notebook tooling (JupyterLab + kernel). Not imported by the scripts;
+#     used to run/experiment with notebooks in this venv. ipykernel registers
+#     the venv as a selectable Jupyter kernel. ---
+jupyterlab==4.6.4
+ipykernel==7.3.0

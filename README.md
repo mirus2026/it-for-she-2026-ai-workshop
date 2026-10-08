@@ -157,8 +157,9 @@ py -0p
  -V:3.13[-64]     C:\Users\ACME\AppData\Local\Python\pythoncore-3.13-64\python.exe
  -V:3.12[-64]     C:\Users\ACME\AppData\Local\Python\pythoncore-3.12-64\python.exe
 
+py -3.12 -m venv .venv
 .\.venv\Scripts\Activate.ps1
-(.venv) PS C:\Users\EPOMIBA\source\repos\it-for-she-2026-ai-workshop> python -V
+(.venv) PS C:\it-for-she-2026-ai-workshop> python -V
 Python 3.12.10
 python -m pip install --upgrade pip
 python -m pip install -r requirements.txt

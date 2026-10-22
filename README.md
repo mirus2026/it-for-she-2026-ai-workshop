@@ -3,17 +3,18 @@
 Input material for **Handwritten digit recognition using neural network** workshop.
 
 A convolutional neural network (Keras/TensorFlow) that classifies handwritten digits (0-9) from the MNIST-style CSV dataset in `datasets/Train.csv`.
+MNIST stands for Modified National Institute of Standards and Technology.
 
-The project has three parts:
+The project has two parts:
 
-- `handwritten-digit-recognition.ipynb` - trains the model on `datasets/Train.csv` and  saves it to `mnist_model.keras`.
+- `handwritten-digit-recognition-en.ipynb` - trains the model on `datasets/Train.csv` and saves it to `mnist_model.keras`.
 - `mnist_ui_local_model.py` - a Tkinter paint app to draw a 28x28 digit and evaluate against local model.
 
-The typical workflow is: train once, draw a digit and export it, then predict.
 
-## Training pipeline (Steps 1-8)
+## ML pipeline (Steps 1-10)
 
-`handwritten-digit-recognition.py` is organized into ten numbered steps that take the raw CSV all the way to a trained, saved model plus sample predictions. The diagram below shows that flow end to end.
+Handwritten digit recognition ML is organized into ten numbered steps that take the raw CSV all the way to a trained, saved model plus sample predictions.
+The diagram below shows that flow end to end:
 
 ```mermaid
 flowchart LR
@@ -33,12 +34,10 @@ flowchart LR
 
 ## Neural Network model configuration
 
-The model is a convolutional neural network (CNN) defined in
-`handwritten-digit-recognition.py` (Step 6). A 28x28x1 grayscale image passes through
-two Conv2D + MaxPooling blocks that learn local spatial features, is flattened, then
-goes through a 128-unit ReLU dense layer with dropout and a 10-unit softmax output
-(one probability per digit 0-9). It is compiled with the Adam optimizer and
-categorical cross-entropy loss.
+The model is a Convolutional Neural Betwork (CNN) defined. 
+A 28x28x1 grayscale image passes through two Conv2D + MaxPooling blocks that learn local spatial features, is flattened, 
+then goes through a 128-unit ReLU dense layer with dropout and a 10-unit softmax output (one probability per digit 0-9).
+It is compiled with the Adam optimizer and categorical cross-entropy loss.
 
 ```mermaid
 flowchart LR

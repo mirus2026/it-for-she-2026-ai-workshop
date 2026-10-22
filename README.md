@@ -1,4 +1,6 @@
-# Handwritten digit recognition using neural network.
+# IT For SHE Woman in Tech 2026 - AI/ML workshop
+
+Input material for **Handwritten digit recognition using neural network** workshop.
 
 A convolutional neural network (Keras/TensorFlow) that classifies handwritten digits (0-9) from the MNIST-style CSV dataset in `datasets/Train.csv`.
 
@@ -9,7 +11,7 @@ The project has three parts:
 
 The typical workflow is: train once, draw a digit and export it, then predict.
 
-## Training pipeline (Steps 1-10)
+## Training pipeline (Steps 1-8)
 
 `handwritten-digit-recognition.py` is organized into ten numbered steps that take the raw CSV all the way to a trained, saved model plus sample predictions. The diagram below shows that flow end to end.
 
@@ -29,7 +31,7 @@ flowchart LR
     S1 --> S2 --> S3 --> S4 --> S5 --> S6 --> S7 --> S8 --> S9 --> S10
 ```
 
-## Network architecture
+## Neural Network model configuration
 
 The model is a convolutional neural network (CNN) defined in
 `handwritten-digit-recognition.py` (Step 6). A 28x28x1 grayscale image passes through
@@ -104,89 +106,136 @@ flowchart LR
   `tensorflow`, `pandas`, `numpy`, `scikit-learn`, `matplotlib`, plus `jupyterlab` / `ipykernel` for notebook use.
 - `mnist_ui_local_model.py` uses only the Python standard library (`tkinter`), so it needs no dependencies and can run on any Python that ships Tk.
 
+## Key notes
 
-## Tk package on operating system
-
+Here's some extra information:
+* You need 2.5 GB free space on hard disk
+* You should not have running application which uses TCP port 8888
+* If you have additional anti-virus software please make sure that it will not block URL:  http://localhost:8888/lab
+* On Microsoft Windows operating system Tk packages are available out of the box after Python 3.12 installation. For Linux operating system please install below OS packages:
 ```
 sudo apt install -y libfontconfig1-dev libxft-dev tk-dev tcl-dev
 ```
 
-## Installing Git
+## Prepare environment for AI/ML workshop
 
-
-
-## Installing Python 3.12.10 (if you have a newer Python)
-
- https://www.python.org/ftp/python/3.12.10/python-3.12.10-amd64.exe
-
-If your default Python is 3.13/3.14 (check with `python --version`), you need a 3.12
-interpreter *alongside* it. You do not have to uninstall your existing Python.
-
-
-```
-cd it-for-she-2026-ai-workshop/
-```
-
-
-### Windows
+### Prepare environment for Microsoft Windows operating system
 
 Fresh installation on Microsoft Windows 11 (no Python installation)
 
-Open Terminal window:
+Open Terminal window. Type Terminal in Search textbox on taskbar:
 
+![Windows Taskbar](docs/img/win-taskbar.png)
+
+You will get:
+
+![Terminal application](docs/img/TerminalApp.png)
+
+Click icon or Open hyperlink:
+
+![Terminal window](docs/img/TerminalWindow.png)
+
+Type below command (or copy from here and paste to the Windows PowerShell terminal window):
 ```powershell
 winget install Python.Python.3.12
 ```
-Close Terminal window and open it again:
+and press Enter key:
+
+![Winget command](docs/img/WingetPythonCmd.png)
+
+Download started (it takes 1-2 minutes), soon installation starts:
+
+![Python installation progress](docs/img/PythonInstallationProgress.png)
+
+Installation takes few minutes:
+
+![Python installation completed](docs/img/PythonInstallationCompleted.png)
+
+Close Terminal window (click X or type exit and press Enter key).
+Open it again:
+
+![Terminal application](docs/img/TerminalWindow.png)
+
+Type below command (or copy from here and paste to the Windows PowerShell terminal window):
 
 ```powershell
-python -m pip install --upgrade pip
-python -m pip install -r requirements.txt
-```
-
-Existing Python installation on Microsoft Windows 11
-
-```
-python -V
-Python 3.14.3
-
-winget install Python.Python.3.12
-
 py -0p
- -V:3.14[-64] *   C:\Users\ACME\AppData\Local\Python\pythoncore-3.14-64\python.exe
- -V:3.13[-64]     C:\Users\ACME\AppData\Local\Python\pythoncore-3.13-64\python.exe
- -V:3.12[-64]     C:\Users\ACME\AppData\Local\Python\pythoncore-3.12-64\python.exe
-
-py -3.12 -m venv .venv
-.\.venv\Scripts\Activate.ps1
-(.venv) PS C:\it-for-she-2026-ai-workshop> python -V
-Python 3.12.10
-python -m pip install --upgrade pip
-python -m pip install -r requirements.txt
 ```
+![List of Python installations](docs/img/ListOfPythonVersions.png)
 
-
-
-Option A - official installer (simplest):
-
-1. Download "Python 3.12.10" (Windows installer, 64-bit) from
-   <https://www.python.org/downloads/release/python-31210/>.
-2. Run it and tick **"py launcher"** (usually already installed). You do NOT need to
-   tick "Add to PATH" - the `py` launcher lets you select versions explicitly.
-3. Verify it is available side by side with your other versions:
-
-   ```powershell
-   py -0p          # lists all installed Python versions and their paths
-   py -3.12 --version   # should print Python 3.12.10
-   ```
-
-Option B - winget:
+You should see line with version: 3.12.
+Download git repository from GitHub web site.
+Extract content of ZIP file.
+Type below commands (or copy from here and paste to the Windows PowerShell terminal window):
 
 ```powershell
-winget install Python.Python.3.12
+$zip = "$env:USERPROFILE\Downloads\it-for-she-2026-ai-workshop.zip"
+Invoke-WebRequest -Uri "https://github.com/mirus2026/it-for-she-2026-ai-workshop/archive/refs/heads/main.zip" -OutFile $zip
+Expand-Archive -Path $zip -DestinationPath "$env:USERPROFILE\Downloads" -Force
 ```
 
-### macOS / Linux
+![Download and extract git repo](docs/img/DownloadExtractGitRepo.png)
+
+Remark: You might type Enter twice to execute all commands.
+
+Go to folder where files were extracted.
+Type below command (or copy from here and paste to the Windows PowerShell terminal window):
+
+```powershell
+cd .\Downloads\it-for-she-2026-ai-workshop-main\
+```
+
+List all files and folders in extracted folder.
+Type below command (or copy from here and paste to the Windows PowerShell terminal window):
+
+```powershell
+ls
+```
+You should see content like below:
+
+![Extracted git repository](docs/img/ExtractedFolderContent.png)
+
+Create virtual environment.
+Type below command (or copy from here and paste to the Windows PowerShell terminal window):
+
+```powershell
+py -3.12 -m venv .venv
+```
+If you get nothing than command was successfully executed:
+
+![Virtual environment created](docs/img/VirtualEnvCreated.png)
+
+Activate virtual environment.
+Type below command (or copy from here and paste to the Windows PowerShell terminal window):
+
+```powershell
+.\.venv\Scripts\Activate.ps1
+```
+You should see: (.venv) text:
+
+![Virtual environment activated](docs/img/VirtEnvActivated.png)
+
+Upgrade pip command to latest version.
+Type below command (or copy from here and paste to the Windows PowerShell terminal window):
+
+```powershell
+python -m pip install --upgrade pip
+```
+![pip upgrade](docs/img/PipUpgrade.png)
+
+Install python modules required for Machine Learning.
+Type below command (or copy from here and paste to the Windows PowerShell terminal window):
+
+```powershell
+python -m pip install -r requirements.txt
+```
+Installation will take approx. 5-10 minutes:
+
+![Python modules installed](docs/img/PythonModulesInstalled.png)
+
+Now, you are prepared for workshop!
+
+### Prepare environment for MacOS / Linux
 
 Install pyenv first (https://github.com/pyenv/pyenv#installation)
 
@@ -202,72 +251,108 @@ eval "$(pyenv init - bash)"
 
 Restart your shell for the changes to take effect (logout / login).
 
-Use pyenv to install and select 3.12 without touching the system Python:
+Use pyenv to install Python 3.12.10 without touching the system Python:
 
 ```bash
 pyenv install 3.12.10
-pyenv local 3.12.10     # pins 3.12.10 for this project directory
-python --version        # should print Python 3.12.10
 ```
+Download and installation will take several minutes.
+You should see:
 
-if you have to reinstall Python 3.12.10 than first you need to uninstall it:
+```text
+Downloading Python-3.12.10.tar.xz...
+-> https://www.python.org/ftp/python/3.12.10/Python-3.12.10.tar.xz
+Installing Python-3.12.10...
+Installed Python-3.12.10 to /home/mirek/.pyenv/versions/3.12.10
+```
+You should select Python 3.12.10:
 
 ```bash
-pyenv uninstall 3.12.10
+pyenv local 3.12.10
 ```
 
-
-## Installation
-
-These steps create a virtual environment (isolated from your system Python) using the
-3.12 interpreter, then install the pinned dependencies. Run them from the project root.
-
-### Windows (PowerShell)
-
-```powershell
-# 1. Create a virtual environment using Python 3.12 (via the py launcher)
-py -3.12 -m venv .venv
-
-# 2. Confirm the venv is 3.12.10
-.\.venv\Scripts\python.exe --version
-
-# 3. Upgrade pip
-.\.venv\Scripts\python.exe -m pip install --upgrade pip
-
-# 4. Install all pinned dependencies (TensorFlow is a large download)
-.\.venv\Scripts\python.exe -m pip install -r requirements.txt
-```
-
-### macOS / Linux
+No output from command execution means that it was executed properly.
 
 ```bash
-# 1. Create the venv with 3.12 (after `pyenv local 3.12.10`, `python` is 3.12)
+python --version
+```
+
+Last command should print: Python 3.12.10
+
+Download git repository:
+
+```bash
+curl -L "https://github.com/mirus2026/it-for-she-2026-ai-workshop/archive/refs/heads/main.zip" -o it-for-she-2026-ai-workshop.zip
+```
+
+Extract content of ZIP file:
+
+```bash
+unzip it-for-she-2026-ai-workshop.zip
+```
+
+Go to folder where files were extracted:
+
+```bash
+cd it-for-she-2026-ai-workshop-main
+```
+
+Create virtual environment:
+
+```bash
 python -m venv .venv
-
-# 2. Confirm the venv is 3.12.10
-./.venv/bin/python --version
-
-# 3. Upgrade pip and install pinned dependencies
-./.venv/bin/python -m pip install --upgrade pip
-./.venv/bin/python -m pip install -r requirements.txt
 ```
 
-Once installed, every command below uses the venv's Python
-(`.\.venv\Scripts\python.exe` on Windows, `./.venv/bin/python` on macOS/Linux).
+Active virtual environment:
 
-### Run the notebook interactively (JupyterLab)
+```bash
+source .venv/bin/activate
+```
 
-`handwritten-digit-recognition.ipynb` is the step-by-step notebook version of the
+Upgrade pip module:
+
+```bash
+python -m pip install --upgrade pip
+```
+
+Install Python modules:
+
+```bash
+python -m pip install -r requirements.txt
+```
+
+## Run the notebook interactively (JupyterLab)
+
+`handwritten-digit-recognition-en.ipynb` is the step-by-step notebook version of the
 training script. To run it interactively:
 
 1. Start JupyterLab from the project root (it opens your browser at
    `http://localhost:8888/lab`; the terminal also prints the URL with an access token):
 
+   On Microsoft Windows:
+
    ```powershell
-   .\.venv\Scripts\jupyter.exe lab
+   .\.venv\Scripts\jupyter lab
+   ```
+   On MacOS / Linux:
+
+   ```bash
+   .venv/bin/jupyter lab
    ```
 
-2. In the left file browser, double-click `handwritten-digit-recognition.ipynb`.
+You should see output like (example for Microsoft Windows operating system):
+
+![Jupyter Lab console](docs/img/JupyterLabWindows.png)
+
+Default web browser will be open with page:
+
+![Jupyter Lab Launcher](docs/img/JupyterLabLauncher.png)
+
+2. In the left file browser, double-click `handwritten-digit-recognition-en.ipynb`
+
+![Jupyter Lab notebook opened](docs/img/JupyterLabNotebookOpened.png)
+
+
 3. Confirm the kernel (top-right of the notebook) is **Python (handwritten-nn)** so the
    venv's packages are used. If it shows a different kernel, click it and switch.
 4. Run cells in order (they depend on each other):
@@ -290,9 +375,27 @@ To strip all cell outputs (printed text, plots, execution counts) from the noteb
 - for a clean file before committing - run:
 
 ```powershell
-.\.venv\Scripts\jupyter.exe nbconvert --clear-output --inplace handwritten-digit-recognition.ipynb
+.\.venv\Scripts\jupyter nbconvert --clear-output --inplace handwritten-digit-recognition-en.ipynb
+.\.venv\Scripts\jupyter nbconvert --clear-output --inplace handwritten-digit-recognition-pl.ipynb
 ```
 
+## Run MNIST Paint UI demo application using local model
+
+Execute below command:
+
+```powershell
+python mnist_ui_local_model.py
+```
+
+It will take couple of seconds to start because local model must be loaded to memory.
+
+![MNIST Paint application](docs/img/MNIST-Paint-UI.png)
+
+Draw digit in left panel and click Evaluate button:
+
+![MNIST Paint 6 digit drawn](docs/img/MNIST-Paint-6digit.png)
+
+You should see probability of predicted digit.
 
 
 ## Reference material

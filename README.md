@@ -100,25 +100,35 @@ flowchart LR
 
 ## Requirements
 
-- **Python 3.12 (64-bit)** is required. This project is pinned to Python **3.12.10**.
+### Hardware requirements
+
+- Any modern laptop or computer bought within last few years
+- Any operating system (Windows 11, MacOS, Linux) which allow to install Python 3.12
+- 2.5 GB free space on hard disk
+
+### Software requirements
+
+- **Python 3.12** is required. This project is pinned to Python **3.12.10**.
 - Dependencies are pinned in [`requirements.txt`](requirements.txt):
-  `tensorflow`, `pandas`, `numpy`, `scikit-learn`, `matplotlib`, plus `jupyterlab` / `ipykernel` for notebook use.
-- `mnist_ui_local_model.py` uses only the Python standard library (`tkinter`), so it needs no dependencies and can run on any Python that ships Tk.
+  `tensorflow`, `pandas`, `numpy`, `scikit-learn`, `matplotlib`, plus `jupyterlab` / `ipykernel` for notebook use
+- `mnist_ui_local_model.py` uses only the Python standard library (`tkinter`), so it needs no dependencies and can run on any Python that ships Tk
 
 ## Key notes
 
 Here's some extra information:
-* You need 2.5 GB free space on hard disk
+* Access to public Internet to download GitHub repository, Python installation and Python modules
+* Only CPU will be utilized
+* For Linux based operating system you need graphical interface (jupyter lab will be run in web browser)
 * You should not have running application which uses TCP port 8888
 * If you have additional anti-virus software please make sure that it will not block URL:  http://localhost:8888/lab
 * On Microsoft Windows operating system Tk packages are available out of the box after Python 3.12 installation. For Linux operating system please install below OS packages:
-```
+```bash
 sudo apt install -y libfontconfig1-dev libxft-dev tk-dev tcl-dev
 ```
 
 ## Prepare environment for AI/ML workshop
 
-### Prepare environment for Microsoft Windows operating system
+### Prepare environment for Microsoft Windows 11 operating system
 
 Fresh installation on Microsoft Windows 11 (no Python installation)
 
@@ -232,9 +242,254 @@ Installation will take approx. 5-10 minutes:
 
 ![Python modules installed](docs/img/PythonModulesInstalled.png)
 
-Now, you are prepared for workshop!
+Now, you are prepared for workshop on Microsoft Windows 11 operating system!
 
-### Prepare environment for MacOS / Linux
+### Prepare environment for MacOS
+
+On bottom panel please find Terminal icon:
+
+![MacOS Desktop](docs/img/MacOS-Desktop.png)
+
+Click it, you should get Terminal window (with zsh shell):
+
+![MacOS Terminal window](docs/img/MacOs-TerminalWindow.png)
+
+Install pyenv first. Execute below command in Terminal window:
+
+```zsh
+curl -fsSL https://pyenv.run | bash
+```
+
+Sample output from command execution is shown here:
+
+```
+Cloning into '/Users/mirek/.pyenv'...
+remote: Enumerating objects: 1941, done.
+remote: Counting objects: 100% (1941/1941), done.
+remote: Compressing objects: 100% (801/801), done.
+remote: Total 1941 (delta 1193), reused 1390 (delta 889), pack-reused 0 (from 0)
+Receiving objects: 100% (1941/1941), 1.34 MiB | 7.60 MiB/s, done.
+Resolving deltas: 100% (1193/1193), done.
+Cloning into '/Users/mirek/.pyenv/plugins/pyenv-doctor'...
+remote: Enumerating objects: 11, done.
+remote: Counting objects: 100% (11/11), done.
+remote: Compressing objects: 100% (9/9), done.
+remote: Total 11 (delta 1), reused 5 (delta 0), pack-reused 0 (from 0)
+Receiving objects: 100% (11/11), 38.72 KiB | 12.91 MiB/s, done.
+Resolving deltas: 100% (1/1), done.
+Cloning into '/Users/mirek/.pyenv/plugins/pyenv-update'...
+remote: Enumerating objects: 10, done.
+remote: Counting objects: 100% (10/10), done.
+remote: Compressing objects: 100% (6/6), done.
+remote: Total 10 (delta 1), reused 6 (delta 0), pack-reused 0 (from 0)
+Receiving objects: 100% (10/10), done.
+Resolving deltas: 100% (1/1), done.
+Cloning into '/Users/mirek/.pyenv/plugins/pyenv-virtualenv'...
+remote: Enumerating objects: 66, done.
+remote: Counting objects: 100% (66/66), done.
+remote: Compressing objects: 100% (59/59), done.
+remote: Total 66 (delta 9), reused 28 (delta 0), pack-reused 0 (from 0)
+Receiving objects: 100% (66/66), 49.69 KiB | 1.31 MiB/s, done.
+Resolving deltas: 100% (9/9), done.
+
+WARNING: seems you still have not added 'pyenv' to the load path.
+
+# Load pyenv automatically by appending
+# the following to
+# ~/.bash_profile if it exists, otherwise ~/.profile (for login shells)
+# and ~/.bashrc (for interactive shells) :
+
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init - bash)"
+
+# Restart your shell for the changes to take effect.
+
+# Load pyenv-virtualenv automatically by adding
+# the following to ~/.bashrc:
+
+eval "$(pyenv virtualenv-init -)"
+```
+
+For bash shell add below lines to `$HOME/.bashrc` file:
+
+```
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init - bash)"
+```
+For zsh shell add below lines to `$HOME/.zshrc` file:
+
+```
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init - zsh)"
+```
+
+Restart your shell for the changes to take effect (logout / login).
+
+Use pyenv to install Python 3.12.10 without touching the system Python.
+Execute below command in Terminal window:
+
+```zsh
+pyenv install 3.12.10
+```
+Download and installation will take several minutes.
+In last line of sample output of command execution, you should see text: `Installed Python-3.12.10`:
+
+```text
+python-build: use openssl@3 from homebrew
+python-build: use readline from homebrew
+Downloading Python-3.12.10.tar.xz...
+-> https://www.python.org/ftp/python/3.12.10/Python-3.12.10.tar.xz
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 19.5M  100 19.5M    0     0  18.0M      0  0:00:01  0:00:01 --:--:-- 18.0M
+Installing Python-3.12.10...
+patching file 'Misc/NEWS.d/next/macOS/2026-08-05-02-02-33.gh-issue-153711.pO9fFb.rst'
+patching file configure
+patching file configure.ac
+python-build: use tcl-tk@8 from homebrew
+python-build: use readline from homebrew
+python-build: use zlib from xcode sdk
+Installed Python-3.12.10 to /Users/mirek/.pyenv/versions/3.12.10
+```
+
+You should select Python 3.12.10.
+Execute below command in Terminal window:
+
+```zsh
+pyenv local 3.12.10
+```
+No output from command execution means that it was executed properly.
+
+```zsh
+python --version
+```
+
+You should see: `Python 3.12.10`
+
+If not than execute below command in Terminal window:
+
+```zsh
+unalias python
+```
+
+Download git repository.
+Please execute below command in Terminal window:
+
+```zsh
+curl -L "https://github.com/mirus2026/it-for-she-2026-ai-workshop/archive/refs/heads/main.zip" -o it-for-she-2026-ai-workshop.zip
+```
+
+Extract content of ZIP file.
+Please execute below command in Terminal window:
+
+```zsh
+unzip it-for-she-2026-ai-workshop.zip
+```
+
+You should see output like:
+
+```
+Archive:  it-for-she-2026-ai-workshop.zip
+3f14088b1d8c6e2edec7a16927f35f531c95d416
+   creating: it-for-she-2026-ai-workshop-main/
+  inflating: it-for-she-2026-ai-workshop-main/.gitignore
+  inflating: it-for-she-2026-ai-workshop-main/README.md
+  inflating: it-for-she-2026-ai-workshop-main/Tk-troubleshooting.md
+   creating: it-for-she-2026-ai-workshop-main/datasets/
+  inflating: it-for-she-2026-ai-workshop-main/datasets/Train.csv
+  inflating: it-for-she-2026-ai-workshop-main/datasets/test.csv
+   creating: it-for-she-2026-ai-workshop-main/docs/
+   creating: it-for-she-2026-ai-workshop-main/docs/img/
+  inflating: it-for-she-2026-ai-workshop-main/docs/img/DownloadExtractGitRepo.png
+  inflating: it-for-she-2026-ai-workshop-main/docs/img/ExtractedFolderContent.png
+  inflating: it-for-she-2026-ai-workshop-main/docs/img/JupyterLabLauncher.png
+  inflating: it-for-she-2026-ai-workshop-main/docs/img/JupyterLabNotebookOpened.png
+  inflating: it-for-she-2026-ai-workshop-main/docs/img/JupyterLabWindows.png
+  inflating: it-for-she-2026-ai-workshop-main/docs/img/ListOfPythonVersions.png
+  inflating: it-for-she-2026-ai-workshop-main/docs/img/MNIST-Paint-6digit.png
+  inflating: it-for-she-2026-ai-workshop-main/docs/img/MNIST-Paint-UI.png
+  inflating: it-for-she-2026-ai-workshop-main/docs/img/PipUpgrade.png
+  inflating: it-for-she-2026-ai-workshop-main/docs/img/PythonInstallationCompleted.png
+  inflating: it-for-she-2026-ai-workshop-main/docs/img/PythonInstallationProgress.png
+  inflating: it-for-she-2026-ai-workshop-main/docs/img/PythonModulesInstalled.png
+  inflating: it-for-she-2026-ai-workshop-main/docs/img/TerminalApp.png
+  inflating: it-for-she-2026-ai-workshop-main/docs/img/TerminalWindow.png
+  inflating: it-for-she-2026-ai-workshop-main/docs/img/VirtEnvActivated.png
+  inflating: it-for-she-2026-ai-workshop-main/docs/img/VirtualEnvCreated.png
+  inflating: it-for-she-2026-ai-workshop-main/docs/img/WingetPythonCmd.png
+  inflating: it-for-she-2026-ai-workshop-main/docs/img/win-taskbar.png
+  inflating: it-for-she-2026-ai-workshop-main/handwritten-digit-recognition-en.ipynb
+  inflating: it-for-she-2026-ai-workshop-main/handwritten-digit-recognition-pl.ipynb
+  inflating: it-for-she-2026-ai-workshop-main/mnist_model.keras
+  inflating: it-for-she-2026-ai-workshop-main/mnist_ui_local_model.py
+  inflating: it-for-she-2026-ai-workshop-main/requirements.txt
+```
+
+Go to folder where files were extracted.
+Please execute below command in Terminal window:
+
+```zsh
+cd it-for-she-2026-ai-workshop-main
+```
+
+Create Python virtual environment.
+Please execute below command in Terminal window:
+
+```zsh
+python -m venv .venv
+```
+
+Active Python virtual environment.
+Please execute below command in Terminal window:
+
+```zsh
+source .venv/bin/activate
+```
+You should see `((.venv) )` prefix in shell prompt.
+
+Upgrade pip module.
+Please execute below command in Terminal window:
+
+```zsh
+python -m pip install --upgrade pip
+```
+
+You should see command output similiar to:
+
+```text
+Requirement already satisfied: pip in ./.venv/lib/python3.12/site-packages (25.0.1)
+Collecting pip
+  Downloading pip-26.2.2-py3-none-any.whl.metadata (4.6 kB)
+Downloading pip-26.2.2-py3-none-any.whl (1.8 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.8/1.8 MB 17.4 MB/s eta 0:00:00
+Installing collected packages: pip
+  Attempting uninstall: pip
+    Found existing installation: pip 25.0.1
+    Uninstalling pip-25.0.1:
+      Successfully uninstalled pip-25.0.1
+Successfully installed pip-26.2.2
+```
+
+Install Python modules.
+Please execute below command in Terminal window:
+
+```bash
+python -m pip install -r requirements.txt
+```
+
+Installation will take several minutes.
+You should get output like:
+
+```text
+Successfully installed MarkupSafe-3.0.4 absl-py-2.5.1 anyio-4.15.1 appnope-1.0.0 argon2-cffi-25.1.0 argon2-cffi-bindings-26.1.0 arrow-1.4.0 asttokens-3.0.2 astunparse-1.6.3 async-lru-2.4.0 attrs-26.1.0 babel-2.18.0 beautifulsoup4-4.15.0 bleach-6.4.0 certifi-2026.10.23 cffi-2.1.1 charset_normalizer-3.5.2 cloudpickle-3.1.2 comm-0.2.3 contourpy-1.4.0 cycler-0.12.1 debugpy-1.8.22 defusedxml-0.7.1 executing-2.3.0 fastjsonschema-2.22.2 flatbuffers-25.12.19 fonttools-4.67.0 fqdn-1.6.0 gast-0.7.0 google_pasta-0.2.0 grpcio-1.84.1 h11-0.16.0 h5py-3.14.0 httpcore-1.0.9 httpx-0.28.1 idna-3.20 ipykernel-7.3.0 ipython-9.17.1 ipython-pygments-lexers-1.1.1 isoduration-20.11.0 jedi-0.20.1 jinja2-3.1.6 joblib-1.6.0 json5-0.17.3 jsonpointer-3.4 jsonschema-4.26.0 jsonschema-specifications-2025.9.1 jupyter-builder-1.2.3 jupyter-client-8.10.0 jupyter-core-5.9.1 jupyter-events-0.12.1 jupyter-lsp-2.3.1 jupyter-server-2.21.1 jupyter-server-terminals-0.5.4 jupyterlab-4.6.4 jupyterlab-pygments-0.3.0 jupyterlab-server-2.28.1 keras-3.15.1 kiwisolver-1.5.1 lark-1.3.1 libclang-18.1.1 markdown-it-py-4.2.0 matplotlib-3.11.1 matplotlib-inline-0.2.2 mdurl-0.1.2 mistune-3.4.0 ml_dtypes-0.6.0 namex-0.1.0 narwhals-2.27.1 nbclient-0.11.0 nbconvert-7.17.2 nbformat-5.11.1 nest-asyncio2-1.7.4 notebook-shim-0.2.4 numpy-2.5.3 opt_einsum-3.4.0 optree-0.20.0 packaging-26.3 pandas-3.0.5 pandocfilters-1.5.1 parso-0.8.7 pexpect-4.9.0 pillow-13.0.0 platformdirs-4.13.5 prometheus-client-0.26.0 prompt_toolkit-3.0.53 protobuf-7.36.2 psutil-7.2.2 ptyprocess-0.7.0 pure-eval-0.2.4 pycparser-3.12 pygments-2.21.0 pyparsing-3.3.3 python-dateutil-3.0.0 python-json-logger-4.2.0 pyyaml-6.0.3 pyzmq-27.2.0 referencing-0.37.0 requests-2.34.2 rfc3339-validator-0.1.4 rfc3986-validator-0.1.1 rfc3987-syntax-1.1.0 rich-15.0.0 rpds-py-2026.9.1 scikit-learn-1.9.0 scipy-1.18.1 send2trash-2.1.0 setuptools-84.2.1 six-1.17.0 soupsieve-3.0.4 stack_data-0.6.3 tensorflow-2.21.0 termcolor-3.3.0 terminado-0.18.1 threadpoolctl-3.7.0 tinycss2-1.5.1 tornado-6.6 traitlets-5.16.1 typing_extensions-4.16.0 tzdata-2026.5 uri-template-1.3.0 urllib3-2.8.0 wcwidth-0.9.4 webcolors-25.10.0 webencodings-0.6.1 websocket-client-1.9.2 wheel-0.48.0 wrapt-2.5.1
+```
+
+Now, you are prepared for workshop on MacOS operating system!
+
+### Prepare environment for Linux
 
 Install pyenv first (https://github.com/pyenv/pyenv#installation)
 
@@ -320,6 +575,7 @@ Install Python modules:
 python -m pip install -r requirements.txt
 ```
 
+
 ## Run the notebook interactively (JupyterLab)
 
 `handwritten-digit-recognition-en.ipynb` is the step-by-step notebook version of the
@@ -395,7 +651,6 @@ Draw digit in left panel and click Evaluate button:
 ![MNIST Paint 6 digit drawn](docs/img/MNIST-Paint-6digit.png)
 
 You should see probability of predicted digit.
-
 
 ## Reference material
 

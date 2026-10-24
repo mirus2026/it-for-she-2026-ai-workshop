@@ -37,6 +37,8 @@ os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"   # 0=all, 1=no INFO, 2=no WARNING, 3=n
 os.environ["TF_ENABLE_ONEDNN_OPTS"] = "0"  # removes the oneDNN custom-operations notice
 import threading
 import tkinter as tk
+from tkinter import ttk
+from tkinter import font as tkfont
 import numpy as np
 import tensorflow as tf
 from tensorflow.keras.models import load_model
@@ -67,6 +69,74 @@ TEXT = "#c9ccd6"
 TEXT_DIM = "#6f7488"
 TEXT_STRONG = "#e8eaf0"
 HIGHLIGHT = "#e0455e"
+
+# ----- fonts ---------------------------------------------------------------
+# Font families are OS-specific: Consolas / Segoe UI ship with Windows, Menlo /
+# Helvetica Neue with macOS. When a family is missing Tk silently substitutes an
+# arbitrary one, which is why the same window can look different per platform.
+# We therefore pick the first family that is actually installed (see
+# resolve_fonts(), called once the Tk root exists).
+MONO_CANDIDATES = ("Consolas", "Menlo", "DejaVu Sans Mono", "Courier New", "Courier")
+UI_CANDIDATES = ("Segoe UI", "Helvetica Neue", "DejaVu Sans", "Helvetica", "Arial")
+
+FONT_MONO = "Courier"      # replaced by resolve_fonts()
+FONT_UI = "Helvetica"      # replaced by resolve_fonts()
+
+
+def resolve_fonts():
+    """Pick the best available mono/UI font family.
+
+    Must be called after tk.Tk() exists, because tkfont.families() needs a
+    live interpreter to query the system font list.
+    """
+    global FONT_MONO, FONT_UI
+    available = {name.lower() for name in tkfont.families()}
+    for candidate in MONO_CANDIDATES:
+        if candidate.lower() in available:
+            FONT_MONO = candidate
+            break
+    for candidate in UI_CANDIDATES:
+        if candidate.lower() in available:
+            FONT_UI = candidate
+            break
+    log.info("Using fonts: mono=%s, ui=%s", FONT_MONO, FONT_UI)
+
+
+def setup_styles():
+    """Configure the ttk theme used for the buttons.
+
+    tk.Button maps onto the native control on macOS (Aqua), which ignores
+    -background / -foreground, so classic Tk buttons stay light grey there no
+    matter what colours are set. The native ttk themes ('aqua' on macOS,
+    'vista' on Windows) behave the same way. 'clam' is bundled with every Tk
+    build and does honour colours, so using it gives one identical dark theme
+    on Windows, macOS and Linux.
+    """
+    style = ttk.Style()
+    if "clam" in style.theme_names():
+        style.theme_use("clam")
+    style.configure(
+        "Dark.TButton",
+        background=PANEL,
+        foreground=TEXT,
+        bordercolor=GRID_LINE,
+        lightcolor=PANEL,        # 'clam' uses these for the 3D edges
+        darkcolor=PANEL,
+        focuscolor=PANEL,
+        borderwidth=1,
+        relief="flat",
+        padding=(14, 5),
+        font=(FONT_UI, 10),
+    )
+    style.map(
+        "Dark.TButton",
+        background=[("pressed", ACCENT), ("active", ACCENT), ("disabled", BG)],
+        foreground=[("pressed", "white"), ("active", "white"),
+                    ("disabled", TEXT_DIM)],
+        bordercolor=[("active", ACCENT), ("disabled", GRID_LINE)],
+        lightcolor=[("pressed", ACCENT), ("active", ACCENT), ("disabled", BG)],
+        darkcolor=[("pressed", ACCENT), ("active", ACCENT), ("disabled", BG)],
+    )
 
 
 class PaintApp:
@@ -150,7 +220,7 @@ class PaintApp:
         self.canvas.bind("<Leave>", self.on_leave)
 
         tk.Label(left, text="draw a digit here", bg=BG, fg=TEXT_DIM,
-                 font=("Consolas", 11)).pack(pady=(8, 0))
+                 font=(FONT_MONO, 11)).pack(pady=(8, 0))
 
         # --- middle: full 28x28 value grid ---
         middle = tk.Frame(body, bg=BG)
@@ -165,7 +235,7 @@ class PaintApp:
         self.grid_canvas.bind("<Leave>", self.on_leave)
 
         tk.Label(middle, text="all 28x28 pixel values", bg=BG, fg=TEXT_DIM,
-                 font=("Consolas", 11)).pack(pady=(8, 0))
+                 font=(FONT_MONO, 11)).pack(pady=(8, 0))
 
         # --- right: prediction output ---
         right = tk.Frame(body, bg=BG)
@@ -173,7 +243,7 @@ class PaintApp:
 
         self.output = tk.Text(right, width=40, height=24, bg=PANEL,
                               fg=TEXT_STRONG, insertbackground=TEXT,
-                              relief="flat", font=("Consolas", 11),
+                              relief="flat", font=(FONT_MONO, 11),
                               highlightthickness=1,
                               highlightbackground=GRID_LINE, padx=12, pady=10,
                               wrap="none")
@@ -181,28 +251,26 @@ class PaintApp:
         self.output.configure(state="disabled")
 
         tk.Label(right, text="model predictions", bg=BG, fg=TEXT_DIM,
-                 font=("Consolas", 11)).pack(pady=(8, 0))
+                 font=(FONT_MONO, 11)).pack(pady=(8, 0))
 
         # --- bottom status ---
         self.status = tk.Label(self.root, text="loading model...",
                                bg=BG, fg=TEXT_STRONG,
-                               font=("Consolas", 14, "bold"))
+                               font=(FONT_MONO, 14, "bold"))
         self.status.pack(pady=(4, 12))
 
         # controls hint + clear/evaluate buttons
         ctrl = tk.Frame(self.root, bg=BG)
         ctrl.pack(pady=(0, 12))
-        tk.Button(ctrl, text="Clear", command=self.clear,
-                  bg=PANEL, fg=TEXT, activebackground=ACCENT,
-                  activeforeground="white", relief="flat",
-                  font=("Segoe UI", 10), padx=14, pady=4).pack(side="left")
-        self.eval_btn = tk.Button(ctrl, text="Evaluate", command=self.evaluate,
-                                  bg=PANEL, fg=TEXT, activebackground=ACCENT,
-                                  activeforeground="white", relief="flat",
-                                  font=("Segoe UI", 10), padx=14, pady=4)
+        # ttk.Button (styled via setup_styles) instead of tk.Button: the classic
+        # Tk button ignores colours on macOS and would render light grey there.
+        ttk.Button(ctrl, text="Clear", command=self.clear,
+                   style="Dark.TButton", takefocus=False).pack(side="left")
+        self.eval_btn = ttk.Button(ctrl, text="Evaluate", command=self.evaluate,
+                                   style="Dark.TButton", takefocus=False)
         self.eval_btn.pack(side="left", padx=(8, 0))
         tk.Label(ctrl, text="  left-drag = draw    right-drag = erase",
-                 bg=BG, fg=TEXT_DIM, font=("Segoe UI", 9)).pack(side="left")
+                 bg=BG, fg=TEXT_DIM, font=(FONT_UI, 9)).pack(side="left")
 
     # ----- value helpers ----------------------------------------------------
     def value_at(self, row, col):
@@ -279,10 +347,10 @@ class PaintApp:
             centre = GMARGIN + i * GCELL + GCELL // 2
             # column number above the grid
             c.create_text(centre, GMARGIN // 2, text=str(i + 1),
-                          fill=TEXT_DIM, font=("Consolas", 6))
+                          fill=TEXT_DIM, font=(FONT_MONO, 6))
             # row number to the left of the grid
             c.create_text(GMARGIN // 2, centre, text=str(i + 1),
-                          fill=TEXT_DIM, font=("Consolas", 6))
+                          fill=TEXT_DIM, font=(FONT_MONO, 6))
 
         for row in range(GRID):
             for col in range(GRID):
@@ -298,7 +366,7 @@ class PaintApp:
                     fg = "#111111" if val > 140 else "#e8eaf0"
                     txt = c.create_text((x0 + x1) // 2, (y0 + y1) // 2,
                                         text=str(val), fill=fg,
-                                        font=("Consolas", 6))
+                                        font=(FONT_MONO, 6))
                     self._grid_texts[row][col] = txt
         self._highlight_id = c.create_rectangle(-10, -10, -10, -10,
                                                 outline=HIGHLIGHT, width=2)
@@ -448,6 +516,9 @@ class PaintApp:
 def main():
     log.info("Application started.")  # (1) start of script
     root = tk.Tk()
+    # Both need a live Tk interpreter, and must run before any widget is built.
+    resolve_fonts()
+    setup_styles()
     app = PaintApp(root)
     app._set_output("Loading model...")
     root.resizable(False, False)
